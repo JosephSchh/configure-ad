@@ -62,10 +62,63 @@ To enable ICMPv4, open Windows Defender FIrewall with Advanced Security -> Inbou
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/dMWWzX7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/U6DYlnD.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/xOZ1yWp.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Great next we are going to install Active Directory
+Great! Next we are going to install Active Directory, first login to DC-1 and you will be greeted with the Windows server manager dashboard. Click on Add Roles and Features -> Server Roles -> Active Directory Domain Services -> Next then Install. When that is done installing you should recieve a notification in the top right, click on it and go to "Promot this server to a domain controller". Then you will want to add a new forest and name it "mydomain.com" and click next. Once that is done, restart and then log back into DC-1 as user: mydomain.com\labuser.
+
+</p>
+<br />
+
+<p>
+<img src="https://imgur.com/qxj3IKS.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+Cool! Now we are goin going to create an admin and a normal user account in Active Directory. First, open Active Directory Users and Computers in the search bar.
+</p>
+<br />
+
+<p>
+<img src="https://imgur.com/M0GtGZ5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/sL9NYcT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+Next, right click mydomain.com -> New -> Create Organizational Unit. Create a OU named "_EMPLOYEES" and another one named "_ADMINS". Create a new employee named “Jane Doe” (same password) with the username of “jane_admin”.
+</p>
+<br />
+
+<p>
+<img src="https://imgur.com/91YdwOJ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+Add jane_admin to the “Domain Admins” Security Group, to do this right click on Jane Doe then go to Properties -> Member Of -> Add -> Domain Admins -> Ok. Next, Log out/close the Remote Desktop connection to DC-1 and log back in as “mydomain.com\jane_admin”, User jane_admin as your admin account from now on
+</p>
+<br />
+
+<p>
+<img src="https://imgur.com/ILCxRWG.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/ZSw8pqE.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+Awesome! Now we are going to join Client-1 to our domain(mydomain.com). From the Azure Portal navigate to Virtual Machines -> Client-1 Networking -> DNS Servers -> set Client-1’s DNS settings to the DC’s Private IP address -> Save. Next restart Client-1's VM from the Azure portal, when its done restarting, login to Client-1 (Remote Desktop) as the original local admin (labuser). We are going to join Client-1 to the domain now, to do this open Settings -> About -> Rename this PC -> Computer name -> Change -> Domain: mydomain.com -> Ok -> PC will restart.
+</p>
+<br />
+
+<p>
+<img src="https://imgur.com/94I2vi7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+Perfect! Now lets verify Client-1 is on the domain by logging back into DC-1, going to Active Directory Users and Computers, and checking the "Computers" folder. We should see Client-1 listed.
+</p>
+<br />
+
+<p>
+<img src="https://imgur.com/m0hqRJ8.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+Next, lets setup remote desktop for non-administrative users on Client-1. First, log into Client-1 as mydomain.com\jane_admin and open system properties and click “Remote Desktop”. Then allow “domain users” access to remote desktop by clicking "add". You can now log into Client-1 as a normal, non-administrative user.
 </p>
 <br />
 
@@ -73,55 +126,7 @@ Great next we are going to install Active Directory
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Almost done! Moving on we are now going to creat a bunch of additional user and attempt to log into Client-1 with one of the users. First login to DC-1 as jane_admin. Open Powershell_ise as an administrator.
 </p>
 <br />
 
